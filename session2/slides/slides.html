@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Speech Production and Modeling  </title>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+   <link rel="stylesheet" href="../../assets/katex.min.css">
+   <link rel="stylesheet" type="text/css" href="../../assets/slides.css">
+   <link rel="stylesheet" type="text/css" href="../../assets/grid.css">
+   <!-- Change equation font color defined in assests/slides.css -->
+  <script type="text/javascript">
+    document.documentElement.style
+    .setProperty('--eq_font_color', '#004c86');
+  </script>
+  <script src="../../assets/katex.min.js"></script>
+  </head>
+  <body>
+
+<textarea id="source">
+
+
+class: middle, center
+
+<!--- 
+https://katex.org/docs/supported.html#macros
+--->
+
+$$ \global\def\myx#1{{\color{green}\mathbf{x}\_{#1}}} $$
+$$ \global\def\mys#1{{\color{green}\mathbf{s}\_{#1}}} $$
+$$ \global\def\myz#1{{\color{brown}\mathbf{z}\_{#1}}} $$
+$$ \global\def\myhnmf#1{{\color{brown}\mathbf{h}\_{#1}}} $$
+$$ \global\def\myztilde#1{{\color{brown}\tilde{\mathbf{z}}\_{#1}}} $$
+$$ \global\def\myu#1{\mathbf{u}\_{#1}} $$
+$$ \global\def\mya#1{\mathbf{a}\_{#1}} $$
+$$ \global\def\myv#1{\mathbf{v}\_{#1}} $$
+$$ \global\def\mythetaz{\theta\_\myz{}} $$
+$$ \global\def\mythetax{\theta\_\myx{}} $$
+$$ \global\def\mythetas{\theta\_\mys{}} $$
+$$ \global\def\mythetaa{\theta\_\mya{}} $$
+$$ \global\def\bs#1{{\boldsymbol{#1}}} $$
+$$ \global\def\diag{\text{diag}} $$
+$$ \global\def\mbf{\mathbf} $$
+$$ \global\def\myh#1{{\color{purple}\mbf{h}\_{#1}}} $$
+$$ \global\def\myhfw#1{{\color{purple}\overrightarrow{\mbf{h}}\_{#1}}} $$
+$$ \global\def\myhbw#1{{\color{purple}\overleftarrow{\mbf{h}}\_{#1}}} $$
+$$ \global\def\myg#1{{\color{purple}\mbf{g}\_{#1}}} $$
+$$ \global\def\mygfw#1{{\color{purple}\overrightarrow{\mbf{g}}\_{#1}}} $$
+$$ \global\def\mygbw#1{{\color{purple}\overleftarrow{\mbf{g}}\_{#1}}} $$
+$$ \global\def\neq{\mathrel{\char`≠}} $$
+
+# Speech Production and Modeling
+
+.vspace[
+
+
+]
+
+.center[Simon Leglaive]
+
+.vspace[
+
+  
+]
+
+.small.center[2D-3D Image & Sound, CentraleSupélec]
+
+---
+class: middle
+
+## Today
+
+- Speech production
+- Characteristics of speech signals
+- Analysis, transformation and synthesis of speech signals with the source-filter model
+
+---
+class: middle, center
+
+# Speech production
+
+---
+class: middle
+## Speech signal
+
+.width-100[![](images/dont_ask_me.png)]
+
+.question.center[Can you guess to what “speech sound” each bloc corresponds?]
+
+---
+class: middle
+## Phonemes
+
+
+.alert[Elementary speech sounds are called phonemes.]
+
+.grid[
+
+.kol-2-5[
+
+- 44 phonemes in English.
+- 10-15 phonemes per second in normal English speech.
+- We are going to see what are the key differences in the production of the different phonemes.
+
+]
+.kol-3-5[
+
+.width-100[![](images/Phonemic-Chart.jpg)]
+ 
+]
+
+]
+
+.credit[Image credit: https://www.englishclub.com/pronunciation/phonemic-chart.htm]
+
+---
+class: middle
+## Speech production – the global view
+
+.grid[
+
+.kol-1-2[
+
+- The energy comes from air expelled from the **lungs**.
+- At the **larynx**, this airflow passes between the **vocal folds**.
+- Then it goes through the **vocal tract**, which is made of **three cavities**:
+  1. the pharynx
+  2. the oral cavity
+  3. the nasal cavity
+- Finally, sound goes out of the mouth and nose openings.
+
+]
+.kol-1-2[
+
+.width-90[![](images/Speech-Organs-Diagram.jpg)]
+ 
+]
+
+]
+
+---
+class: middle
+## Articulators
+
+We consider as articulator any mobile part of the vocal tract on which we can act voluntarily and which is used in the production of speech sounds.
+
+
+.grid[
+
+.kol-1-2[
+
+
+
+**Tongue**
+- Very mobile and flexible
+- Very important for phonation
+
+
+**Jaw**
+- Little degrees of freedoms and rigid
+- Less important for phonation
+
+
+]
+.kol-1-2[
+
+**Lips**
+- Very mobile and flexible
+- Important movements for phonation:
+  - occlusion
+  - protrusion
+  - raising and lowering 
+  - stretching, raising and lowering of lip corners
+
+ 
+]
+
+]
+
+---
+class: middle
+## Speech sound sources
+
+We distinguish 3 types of **sound sources**, which can be **combined** or **occur individually**:
+
+- **Quasi-periodic source** resulting from the vibration of the **vocal folds**. 
+
+  We say that the sound is **voiced**. 
+  
+  It can be **arbitrarily long** (in the limits of an exhalation).
+
+- **Fricative noise source** produced by a **turbulent airflow** with a **constriction** in the vocal tract. 
+
+  It can also be **arbitrarily long**.
+
+- **Plosive noise source** produced by quick **occlusions** of the vocal tract and generating an **acoustic impulse**. 
+
+  Here the **duration is short**.
+
+
+---
+class: middle
+## Voice production
+
+.center[
+  <video width="90%" height="90%" controls>
+    <source src="videos/Voice_Production.mp4" type="video/mp4">
+</video>
+]
+
+.credit[Credits: Joe Wolfe, https://vimeo.com/234805962, more info at https://www.animations.physics.unsw.edu.au/waves-sound/human-sound/index.html]
+
+---
+class: middle
+## Vocal folds and pitch
+
+- The vibration of the vocal folds defines the **pitch** of the speech signal (i.e. its fundamental frequency).
+- Variations of pitch along time define the melody of the voice.
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-e5wj{border-color:#ffffff;font-size:20px;text-align:center;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <td class="tg-e5wj"></td>
+    <td class="tg-e5wj">Average pitch (Hz)</td>
+    <td class="tg-e5wj">Pitch range (Hz)</td>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-e5wj">Male</td>
+    <td class="tg-e5wj">100 - 130</td>
+    <td class="tg-e5wj">90 - 270</td>
+  </tr>
+  <tr>
+    <td class="tg-e5wj">Female</td>
+    <td class="tg-e5wj">150 - 300</td>
+    <td class="tg-e5wj">120 - 360</td>
+  </tr>
+  <tr>
+    <td class="tg-e5wj">Child</td>
+    <td class="tg-e5wj">350 - 400</td>
+    <td class="tg-e5wj">200 - 600</td>
+  </tr>
+</tbody>
+</table>
+
+
+---
+class: middle
+## Pitch and mechanisms
+
+.center[
+  <video width="90%" height="90%" controls>
+    <source src="videos/Pitch_Mechanisms.mp4" type="video/mp4">
+</video>
+]
+
+.credit[Credits: Joe Wolfe, https://vimeo.com/128430263, more info at https://www.animations.physics.unsw.edu.au/waves-sound/human-sound/index.html]
+
+---
+class: middle
+## Vocal tract and formants
+
+- The three elementary sound sources are **modified by the vocal tract**, before propagating out of the phonatory system, through the mouth and nose openings.
+- The vocal tract actually corresponds to an **acoustic filtering** of the source signal.
+- The cavities in the vocal tract give rise to **resonances**, that are called the **formants**.
+- By **modifying the shape** of the vocal tract, we change the acoustic filter and the associated resonances.
+- We can **change the formants independently of the pitch**, or in signal processing terms, we can change the filter independently of the source
+
+---
+class: middle
+## Resonances and formants
+
+.center[
+  <video width="90%" height="90%" controls>
+    <source src="videos/Resonances_Formants.mp4" type="video/mp4">
+</video>
+]
+
+.credit[Credits: Joe Wolfe, https://vimeo.com/128430264, more info at https://www.animations.physics.unsw.edu.au/waves-sound/human-sound/index.html]
+
+
+---
+class: middle
+## Distinctive articulatory features of vowels
+
+.grid[
+
+.kol-1-2[
+
+- **Opening** of the mouth
+  - Opened vowel [a] in “hat"
+  - Closed vowel [i] in “meet”
+
+- **“Frontness”** of the tongue
+  - Front vowel [i] in “meet”
+  - Back vowel [u] in “boot”
+
+- **Rounding** of the lips
+  - Rounded vowel [ɔ] in “not”
+  - Not rounded vowel [i] in “meet”
+
+- **Nasalization**: sound comes out of the mouth only, or out of the mouth and nose.
+  - Nasal vowel [ɑ̃] in “pente” in French
+  - Oral vowel [a] in “hat”
+
+
+]
+.kol-1-2[
+
+.vspace[
+
+]
+
+.width-100[![](images/distinctive_articulatory_features.png)]
+
+.credit[Vowel chart with audio: https://en.wikipedia.org/wiki/IPA_vowel_chart_with_audio]
+
+]
+
+]
+
+---
+class: middle
+
+.grid[
+
+.kol-1-2[
+
+## Vowels and formants
+
+We can distinguish between vowels using the **position of the first formants**
+
+- high/low F1 ↔ opened/closed
+- high/low F2 ↔ front/back
+- high/low F3 ↔ not rounded/rounded lips
+
+.alert[By moving articulators, the shape of the vocal tract varies, formants move in frequency, and vowels change.]
+
+]
+.kol-1-2[
+
+
+.right.width-90[![](images/vowel_triangle.png)]
+
+]
+
+]
+
+.credit[Image credit: L.R. Rabiner and R.W. Shafer, “Digital Processing of Speech Signals”, Prentice-Hall, 1978]
+
+
+---
+class: middle
+## Vowels clustering in the formants space
+
+.grid[
+
+.kol-1-2[
+
+
+
+.vspace[
+
+]
+
+.left.width-100[![](images/table_F1_F2.png)]
+
+.caption[male speakers]
+
+]
+
+.kol-1-2[
+
+.right.width-90[![](images/F1vsF2.png)]
+
+.caption[male and children speakers]
+
+
+]
+]
+.credit[Image credit: L.R. Rabiner and R.W. Shafer, “Digital Processing of Speech Signals”, Prentice-Hall, 1978]
+
+---
+class: middle
+## Consonants
+
+.grid[
+
+.kol-1-2[
+
+**Fricatives**
+- fricative noise source
+- voiced [v, z, j] or unvoiced [**?**, **?**, **?**]
+- locally stationary 
+
+**Plosives**
+- plosive noise source
+- voiced [**?**, **?**, **?**] or unvoiced [p, t, k]
+- highly non-stationary 
+
+]
+.kol-1-2[
+
+**Nasal**
+- voiced
+- sound comes mostly from the nose
+- examples: [m, n]
+
+
+**Liquids**
+- voiced
+- the vocal tract changes rapidly, especially using the tongue
+- examples: [l, r]
+
+]
+]
+
+.credit[Consonant chart with audio: https://en.wikipedia.org/wiki/IPA_pulmonic_consonant_chart_with_audio]
+
+---
+class: middle
+count: false
+
+## Consonants
+
+.grid[
+
+.kol-1-2[
+
+**Fricatives**
+- fricative noise source
+- voiced [v, z, j] or unvoiced [f, s, ch]
+- locally stationary 
+
+**Plosives**
+- plosive noise source
+- voiced [b, d, g] or unvoiced [p, t, k]
+- highly non-stationary 
+
+]
+.kol-1-2[
+
+**Nasal**
+- voiced
+- sound comes mostly from the nose
+- examples: [m, n]
+
+
+**Liquids**
+- voiced
+- the vocal tract changes rapidly, especially using the tongue
+- examples: [l, r]
+
+]
+]
+
+.credit[Consonant chart with audio: https://en.wikipedia.org/wiki/IPA_pulmonic_consonant_chart_with_audio]
+
+
+---
+class: middle
+## Prosody
+
+- **Prosody is on top of the flow of phonemes**.
+- Prosodic variables:
+  - **pitch** (fundamental frequency)
+  - **speech rate** (number of speech units, e.g. phonemes, per second)
+  - **loudness** (intensity)
+  - **timbre** (spectral characteristics such as amplitude of harmonics)
+
+- Different combinations of these variables are exploited for intonation and accentuation.
+
+- Prosody may reflect various features of the speaker or the utterance:
+  - the identity of the speaker
+  - the emotional state of the speaker
+  - the form of the utterance (statement, question, or command)
+  - the presence of irony or sarcasm
+  - emphasis
+
+---
+class: middle, center
+
+# Spectrum/spectrogram reading
+
+---
+class: middle
+
+## The spectral envelope
+
+.center.width-90[![](images/u_simon.png)]
+
+- Black curve: power spectrum (in dB) of the recording of a vowel, computed with the DFT.
+- Blue curve: **spectral envelope** showing the formant resonances, computed with linear predictive coding (will be discussed in the lab session).
+
+--
+
+.center.question[ Male or female speaker? ]
+
+---
+class: middle
+
+.grid[
+
+.kol-2-3[
+
+.center.width-100[![](images/aeiou_indiv_spec_mix.svg)]
+
+]
+.kol-1-3[
+
+.width-100[![](images/triangle_french.png)]
+
+]
+]
+
+.center.question[Go to [www.wooclap.com/CXIOJL](https:www.wooclap.com/CXIOJL) and find the vowel that corresponds to each spectrum, using the above French vocal triangle.]
+
+---
+class: middle
+## Spectrogram reading - "aeiou"
+
+We could have done the same from a spectrogram representation.
+
+.grid[
+
+.kol-2-3[
+
+.width-100[![](images/aeiou_simon.png)]
+
+]
+.kol-1-3[
+
+.width-100[![](images/triangle_french.png)]
+
+<audio controls src="audio/simon.wav"></audio>
+
+]
+]
+
+---
+class: middle
+## Spectrogram reading - "assa - azza"
+
+.center.width-60[![](images/assa_azza_annot.png)]
+
+.center[<audio controls src="audio/assa_azza.wav"></audio>]
+
+
+---
+class: middle
+## Spectrogram reading - "atta - adda"
+
+.center.width-60[![](images/atta_adda_annot.png)]
+
+.center[<audio controls src="audio/atta_adda.wav"></audio>]
+
+
+
+---
+class: middle, center
+
+.center.width-80[![](images/mystery_spec.png)]
+
+With a bit of practice you could be able to decode this mystery spectrogram.
+
+1 virtual bonus point if you do it 😉.
+
+---
+class: middle, center
+## Further reading
+
+Introduction to voice acoustics by Joe Wolfe, Emeritus Professor at the University of New South Wales (Syndney, Australia):
+
+https://newt.phys.unsw.edu.au/jw/voice.html
+
+---
+class: middle, center
+# Practical activity
+
+.center.width-80[![](images/source_filter.png)]
+
+.alert[Analysis, transformation and synthesis of speech signals with the .bold[source-filter model]]
+
+
+
+---
+class: middle, center
+# Solution to the wooclap
+
+---
+class: middle, center
+
+.center.width-100[![](images/aeiou_indiv_spec_mix_solution.svg)]
+
+
+</textarea>
+
+
+  <script src="../../assets/remark-latest.min.js"></script>
+  <script src="../../assets/auto-render.min.js"></script>
+  <script src="../../assets/katex.min.js"></script>
+  <script type="text/javascript">
+      function getParameterByName(name, url) {
+          if (!url) url = window.location.href;
+          name = name.replace(/[\[\]]/g, "\\$&");
+          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+              results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+
+      var options = {sourceUrl: getParameterByName("p"),
+                     highlightLanguage: "python",
+                     // highlightStyle: "tomorrow",
+                     // highlightStyle: "default",
+                     highlightStyle: "github",
+                     // highlightStyle: "googlecode",
+                     // highlightStyle: "zenburn",
+                     highlightSpans: true,
+                     highlightLines: true,
+                     ratio: "16:9"};
+
+      var renderMath = function() {
+          renderMathInElement(document.body, {delimiters: [ // mind the order of delimiters(!?)
+              {left: "$$", right: "$$", display: true},
+              {left: "$", right: "$", display: false},
+              {left: "\\[", right: "\\]", display: true},
+              {left: "\\(", right: "\\)", display: false},
+          ]});
+      }
+    var slideshow = remark.create(options, renderMath);
+  </script>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+clear variables
+close all
+
+% Available Microphone Setups
+% -------------------------------------------------------------------------
+%   * Spacing 1 (3-3-3-8-3-3-3) cm
+%   * Spacing 2 (4-4-4-8-4-4-4) cm
+%   * Spacing 3 (8-8-8-8-8-8-8) cm
+% -------------------------------------------------------------------------
+
+% Available Reverberation Times
+% -------------------------------------------------------------------------
+%   * 0.160 [s]
+%   * 0.360 [s]
+%   * 0.610 [s]
+% -------------------------------------------------------------------------
+
+% Room - Setup
+% -------------------------------------------------------------------------
+%
+%          +-----------------window-----------------+
+%          |                                        |
+%          |90°  -1-2-3-4- mic array -5-6-7-8-  270°|
+%          |                                        |
+%          | 75°                               285° |
+%          |                                        |
+%          |  60°                             300°  |
+%          |                                        |
+%          |    45°                         315°    |
+%          |                                        |
+%          |       30°                   330°       |
+%          |             15°        345°            |
+%          |                   0°                   |
+%          |                                        |
+%          +------------------door------------------+
+%
+% Angle:    180° in 15° steps
+% distance: 1m, 2m (from mic array center)
+% -------------------------------------------------------------------------
+% Angle mapping according the notation used within the CoVR project
+% (http://www.covr.rwth-aachen.de):
+% 0 frontal, 90 left, 180 back, 270 right
+% -------------------------------------------------------------------------
+
+addpath('/data/leglaive/recherche/matlab/rdir');
+
+%%
+
+RIRDir = '/data/leglaive/datasets/MIRD';
+T60 = 0.160, 0.360 ou 0.610;
+str_T60 = [num2str(T60, '%.3f'), 's'];
+str_micArray = '8-8-8-8-8-8-8';
+str_distance = '1m';
+DoA = {'270', '315', '000', '045', '090'};
+
+resDir = fullfile(RIRDir, ['mix_filters_' str_T60]);
+mkdir(resDir);
+
+indMic1 = 8;
+indMic2 = 1;
+
+J = 5; % number of sources
+
+fs = 16e3;
+
+for j=1:J
+
+    files = rdir(fullfile(RIRDir,'**', '*'));
+    files = {files([files.isdir] == 0).name};
+    files = files(~cellfun(@isempty, regexpi(files, str_T60)));
+    files = files(~cellfun(@isempty, regexpi(files, str_micArray)));
+    files = files(~cellfun(@isempty, regexpi(files, str_distance)));
+    targetFile = files{~cellfun(@isempty, regexpi(files, DoA{j}))};
+
+    st = load(targetFile);
+
+
+    a = [resample(st.impulse_response(:,indMic1), fs, st.simpar.fs), ...
+     resample(st.impulse_response(:,indMic2), fs, st.simpar.fs)];
+
+    a = a(1:T60*fs+1,:);
+
+    DoA_j = DoA{j};
+    save(fullfile(resDir, ['mix_filters_pos' num2str(j)]), 'a', 'fs', 'DoA_j');
+
+end
