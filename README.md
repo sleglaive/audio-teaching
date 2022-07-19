@@ -22,3 +22,9 @@ Some of the lectures I give at [CentraleSupélec](https://www.centralesupelec.fr
     - [Anechoic auralization](session3/lab/anechoic_auralization.ipynb) ([solution](session3/lab/anechoic_auralization%20(complete).ipynb))
 
     - [DUET](session3/lab/DUET.ipynb) ([solution](session3/lab/DUET%20(complete).ipynb))
+
+## Nonnegative matrix factorization (NMF)
+
+- [Slides](https://sleglaive.github.io/teachings/image-son/session4/slides/slides.html)
+- [Majorization-minimization algorithm for Itakura-Saito NMF (handwritten notes)](session4/IS-NMF.pdf)
+- [Jupyter notebook - NMF and audio unmixing](session4/lab/NMF.ipynb) ([solution](session4/lab/NMF%20(solution).ipynb))
